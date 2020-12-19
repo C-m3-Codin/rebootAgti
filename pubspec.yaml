@@ -28,6 +28,8 @@ dependencies:
   image_picker: ^0.6.7+17
   webview_flutter: ^1.0.7
   weather: ^1.2.4
+  syncfusion_flutter_datepicker: ^18.3.51-beta
+  provider: ^4.3.2+2
 
 
   # The following adds the Cupertino Icons font to your application.

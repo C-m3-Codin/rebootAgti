@@ -1,12 +1,17 @@
 // import 'dart:html';
 
+import 'package:PlatIssue/models.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'dart:io';
 
 import 'package:weather/weather.dart';
+
+import 'SelectedDatepage.dart';
 
 enum AppState { NOT_DOWNLOADED, DOWNLOADING, FINISHED_DOWNLOADING }
 
@@ -20,27 +25,31 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
-          primarySwatch: Colors.blue,
-          // This makes the visual density adapt to the platform that you run
-          // the app on. For desktop platforms, the controls will be smaller and
-          // closer together (more dense) than on mobile platforms.
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: DefaultTabController(
-          length: 3,
-          child: MyHomePage(title: 'Flutter Demo Home Page'),
+    return MultiProvider(
+        providers: [ChangeNotifierProvider(create: (_) => SelectedDate())],
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            // This is the theme of your application.
+            //
+            // Try running your application with "flutter run". You'll see the
+            // application has a blue toolbar. Then, without quitting the app, try
+            // changing the primarySwatch below to Colors.green and then invoke
+            // "hot reload" (press "r" in the console where you ran "flutter run",
+            // or simply save your changes to "hot reload" in a Flutter IDE).
+            // Notice that the counter didn't reset back to zero; the application
+            // is not restarted.
+            primarySwatch: Colors.blue,
+            // This makes the visual density adapt to the platform that you run
+            // the app on. For desktop platforms, the controls will be smaller and
+            // closer together (more dense) than on mobile platforms.
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          home: DefaultTabController(
+            length: 4,
+            child: MyHomePage(title: 'Flutter Demo Home Page'),
+          ),
+          routes: {"dateSelected": (context) => SelectedDatePage()},
         ));
   }
 }
@@ -101,6 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final prov = Provider.of<SelectedDate>(context);
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
@@ -109,9 +119,20 @@ class _MyHomePageState extends State<MyHomePage> {
             Tab(icon: Icon(Icons.cloud)),
             Tab(icon: Icon(Icons.image)),
             Tab(icon: Icon(Icons.web)),
+            Tab(icon: Icon(Icons.web)),
           ],
         ),
         title: Text('Plantech'),
+        actions: <Widget>[
+          FlatButton(
+            textColor: Colors.white,
+            onPressed: () {
+              Navigator.pushNamed(context, 'dateSelected');
+            },
+            child: Text("Save"),
+            shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+          ),
+        ],
       ),
       body: TabBarView(children: [
         Padding(
@@ -193,6 +214,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         Webvie(),
+        DataPik(),
       ]),
       floatingActionButton: FloatingActionButton(
         onPressed: getImage,
@@ -374,6 +396,34 @@ class _WebvieState extends State<Webvie> {
         ),
         Expanded(child: _resultView())
       ],
+    );
+  }
+}
+
+class DataPik extends StatelessWidget {
+  const DataPik({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final prov = Provider.of<SelectedDate>(context);
+    return Container(
+      child: SfDateRangePicker(
+        onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
+          final DateTime rangeStart = args.value.startDate;
+          print(
+              "\n\n\n from $rangeStart to ${(args.value.endDate.runtimeType)}");
+          if (args.value.endDate == null) {
+            print("\n\n\tits not  range");
+            prov.DateSelected(rangeStart);
+          } else {
+            print("\n\n\n its a range");
+            prov.DateSelectedRange(rangeStart, args.value.ednDate);
+          }
+        },
+        selectionMode: DateRangePickerSelectionMode.range,
+      ),
     );
   }
 }
