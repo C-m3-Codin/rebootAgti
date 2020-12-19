@@ -163,6 +163,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     : Center(
                         child: Image.file(_image),
                       ),
+              ),
+              RaisedButton(
+                onPressed: () {},
+                child: Text("Proccess Image"),
               )
             ],
           ),
