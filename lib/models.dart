@@ -1,20 +1,5 @@
 import 'package:flutter/material.dart';
 
-// class EachDay with ChangeNotifier {
-//   List<Map> listTime = [];
-
-//   void addTime(String time, String work) {
-//     listTime.add({time: work});
-//     notifyListeners();
-//   }
-
-//   void checkTime(String time) {}
-
-//   get scheduleList {
-//     return listTime;
-//   }
-// }
-
 class ScheduleDays with ChangeNotifier {
   List<Map> days;
   void addDay(String date) {
