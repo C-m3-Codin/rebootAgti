@@ -56,6 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final databaseRef = FirebaseDatabase.instance.reference();
   String humidity = "";
   String temperature = "";
+  int temp, humid;
+  double td, valu;
   // void readDate() {
 
   //   databaseRef.child("Humidity").once().then((DataSnapshot data) =>
@@ -65,10 +67,18 @@ class _MyHomePageState extends State<MyHomePage> {
   // }
 
   Future<String> readDate() async {
-    databaseRef.child("Humidity").once().then((DataSnapshot data) =>
-        {print("${data.value}"), humidity = data.value.toString()});
-    databaseRef.child("Temperature").once().then((DataSnapshot data) =>
-        {print("${data.value}"), temperature = data.value.toString()});
+    databaseRef.child("Humidity").once().then((DataSnapshot data) => {
+          print("${data.value}"),
+          humidity = data.value.toString(),
+          humid = int.parse(humidity)
+        });
+    databaseRef.child("Temperature").once().then((DataSnapshot data) => {
+          print("${data.value}"),
+          temperature = data.value.toString(),
+          temp = int.parse(temperature),
+          td = temp - ((100 - humid) / 100),
+          valu = 100 - (((temp - td) / temp) * 100)
+        });
     var dat = await databaseRef.child("Humidity").once();
     var da = dat.value;
     return da.toString();
@@ -122,23 +132,34 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: Text("Temperature is $temperature",
                                   textAlign: TextAlign.center)),
                     ),
-                    Text("Humidity"),
+                    // Text("Humidity"),
                     Container(
                       color: Colors.blue,
                       height: 30,
                       child: temperature.isEmpty
                           ? Text("Not Fetched", textAlign: TextAlign.center)
                           : Card(
-                              child:
-                                  Text(humidity, textAlign: TextAlign.center)),
+                              child: Text("Humidity is $humidity",
+                                  textAlign: TextAlign.center)),
                     ),
-                    Text("Temperature"),
+                    // Text("Dew Point"),
                     Container(
                       color: Colors.blue,
                       child: temperature.isEmpty
                           ? Text("Not fetched")
                           : Card(
-                              child: Text(temperature,
+                              child: Text("dew point is ${td.toString()}",
+                                  textAlign: TextAlign.center)),
+                    ),
+                    Container(
+                      color: Colors.blue,
+                      child: temperature.isEmpty
+                          ? Text("No values yet")
+                          : Card(
+                              child: Text(
+                                  humid > 75
+                                      ? "Chance of Rainfall"
+                                      : "Irringation in urgently required",
                                   textAlign: TextAlign.center)),
                     ),
                     RaisedButton(
