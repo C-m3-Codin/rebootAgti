@@ -101,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Tab(icon: Icon(Icons.web)),
           ],
         ),
-        title: Text('Tabs Demo'),
+        title: Text('Plantech'),
       ),
       body: TabBarView(children: [
         Padding(
@@ -113,35 +113,30 @@ class _MyHomePageState extends State<MyHomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // Container(
-                    //   height: 40,
-                    //   child: RaisedButton(
-                    //     onPressed: null,
-                    //     child: Text("camera"),
-                    //   ),
-                    // ),
                     Container(
                       color: Colors.blue,
                       height: 30,
                       child: temperature.isEmpty
                           ? Text("temperature", textAlign: TextAlign.center)
                           : Card(
-                              child: Text(temperature,
+                              child: Text("Temperature is $temperature",
                                   textAlign: TextAlign.center)),
                     ),
+                    Text("Humidity"),
                     Container(
                       color: Colors.blue,
                       height: 30,
                       child: temperature.isEmpty
-                          ? Text("Humidity", textAlign: TextAlign.center)
+                          ? Text("Not Fetched", textAlign: TextAlign.center)
                           : Card(
                               child:
                                   Text(humidity, textAlign: TextAlign.center)),
                     ),
+                    Text("Temperature"),
                     Container(
                       color: Colors.blue,
                       child: temperature.isEmpty
-                          ? Text("temperature")
+                          ? Text("Not fetched")
                           : Card(
                               child: Text(temperature,
                                   textAlign: TextAlign.center)),
@@ -308,28 +303,7 @@ class _WebvieState extends State<Webvie> {
 
   Widget _coordinateInputs() {
     return Row(
-      children: <Widget>[
-        // Expanded(
-        //   child: Container(
-        //       margin: EdgeInsets.all(5),
-        //       child: TextField(
-        //           decoration: InputDecoration(
-        //               border: OutlineInputBorder(), hintText: 'Enter latitude'),
-        //           keyboardType: TextInputType.number,
-        //           onChanged: _saveLat,
-        //           onSubmitted: _saveLat)),
-        // ),
-        // Expanded(
-        //     child: Container(
-        //         margin: EdgeInsets.all(5),
-        //         child: TextField(
-        //             decoration: InputDecoration(
-        //                 border: OutlineInputBorder(),
-        //                 hintText: 'Enter longitude'),
-        //             keyboardType: TextInputType.number,
-        //             onChanged: _saveLon,
-        //             onSubmitted: _saveLon)))
-      ],
+      children: <Widget>[],
     );
   }
 
