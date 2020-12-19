@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "447177741502",
+    "firebase_url": "https://crop-monitor-b24ac-default-rtdb.firebaseio.com",
+    "project_id": "crop-monitor-b24ac",
+    "storage_bucket": "crop-monitor-b24ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447177741502:android:5616e78de24e7bb7b3baef",
+        "android_client_info": {
+          "package_name": "com.example.PlatIssue"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447177741502-709mf5rkcjar1pc6tu6u3j6pv7d63alk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAA5ZtvZ-ri6J-NK7nX9ZyjYC64ACfl-Ao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "447177741502-709mf5rkcjar1pc6tu6u3j6pv7d63alk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
